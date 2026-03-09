@@ -293,6 +293,23 @@ def build_cv_pdf(data, output_path="cv.pdf", highlight=False, language="EN"):
                 )
             )
 
+        # Afficher les liens s'ils existent
+        links = job.get("links", {})
+        if links and isinstance(links, dict):
+            link_items = []
+            for link_name, link_url in links.items():
+                if safe(link_url):
+                    link_items.append(f"<b>{link_name}:</b> {link(link_url)}")
+            
+            if link_items:
+                story.append(Spacer(1, 4))
+                story.append(
+                    Paragraph(
+                        "<br/>".join(link_items),
+                        normal
+                    )
+                )
+
         story.append(Spacer(1,8))
 
 

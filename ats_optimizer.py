@@ -255,6 +255,13 @@ REQUIRED STRUCTURE:
 
 EXTRACTION RULES:
 - Extract ALL work experiences from the CV, even if there are many
+- Extract ALL links from work experiences - look for URLs in formats like:
+  * "Application: https://...", "App: https://...", "Website: https://..."
+  * "GitHub: https://...", "Github: https://...", "Repo: https://..."
+  * "Company website: https://...", "Portfolio: https://..."
+  * Any URL pattern (http:// or https://) mentioned in the work experience section
+- PRESERVE all links found in the CV - they are important and must be kept
+- Store links in the links field as a dictionary: {{"Application": "url", "GitHub": "url", "Company website": "url"}}
 - Extract ALL education entries from the CV
 - Extract ALL technical skills and organize them by category
 - Extract ALL contact information (name, email, phone, location, LinkedIn, GitHub, etc.)
@@ -269,6 +276,11 @@ WORK EXPERIENCE OPTIMIZATION (CRITICAL):
 - REMOVE or minimize bullet points and descriptions that are NOT relevant to the job offer
 - If an experience has many bullet points, keep only the 3-5 most relevant ones for this position
 - If an entire work experience is not relevant to the job offer, you may OMIT it completely
+- ALWAYS PRESERVE links (work_experience.links) from the original CV - do NOT remove or modify them
+- If links exist in the CV, extract and keep ALL of them in the links field
+- Look carefully for links in formats like "Application: url", "GitHub: url", "Company website: url", etc.
+- Links can include project URLs, GitHub repositories, portfolio links, company websites, demo links, etc.
+- Store each link with its label (e.g., "Application", "GitHub", "Company website") as the key and the URL as the value
 - Prioritize quality and relevance over quantity - fewer but highly relevant experiences are better
 - Use action verbs and technical terms from the job offer in descriptions
 - Make descriptions ATS-friendly while remaining truthful to the actual work done
@@ -358,6 +370,13 @@ REQUIRED STRUCTURE:
 
 EXTRACTION RULES:
 - Extract ALL work experiences from the CV, even if there are many
+- Extract ALL links from work experiences - look for URLs in formats like:
+  * "Application: https://...", "App: https://...", "Website: https://..."
+  * "GitHub: https://...", "Github: https://...", "Repo: https://..."
+  * "Company website: https://...", "Portfolio: https://..."
+  * Any URL pattern (http:// or https://) mentioned in the work experience section
+- PRESERVE all links found in the CV - they are important and must be kept
+- Store links in the links field as a dictionary: {{"Application": "url", "GitHub": "url", "Company website": "url"}}
 - Extract ALL education entries from the CV
 - Extract ALL technical skills and organize them by category
 - Extract ALL contact information (name, email, phone, location, LinkedIn, GitHub, etc.)
@@ -372,6 +391,11 @@ WORK EXPERIENCE OPTIMIZATION (CRITICAL):
 - REMOVE or minimize bullet points and descriptions that are NOT relevant to the job offer
 - If an experience has many bullet points, keep only the 3-5 most relevant ones for this position
 - If an entire work experience is not relevant to the job offer, you may OMIT it completely
+- ALWAYS PRESERVE links (work_experience.links) from the original CV - do NOT remove or modify them
+- If links exist in the CV, extract and keep ALL of them in the links field
+- Look carefully for links in formats like "Application: url", "GitHub: url", "Company website: url", etc.
+- Links can include project URLs, GitHub repositories, portfolio links, company websites, demo links, etc.
+- Store each link with its label (e.g., "Application", "GitHub", "Company website") as the key and the URL as the value
 - Prioritize quality and relevance over quantity - fewer but highly relevant experiences are better
 - Use action verbs and technical terms from the job offer in descriptions
 - Make descriptions ATS-friendly while remaining truthful to the actual work done

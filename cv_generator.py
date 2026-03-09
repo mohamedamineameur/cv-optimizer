@@ -37,9 +37,9 @@ def link(url):
     return f'<link href="{url}" color="{LINK_COLOR}">{url}</link>'
 
 
-def highlight_text(text, keywords):
+def highlight_text(text, keywords, highlight=False):
 
-    if not HIGHLIGHT or not text:
+    if not highlight or not text or not keywords:
         return text or ""
 
     for word in keywords:
@@ -57,10 +57,40 @@ def highlight_text(text, keywords):
 # PDF BUILDER
 # =========================
 
-def build_cv_pdf(data, output_path="cv.pdf"):
+def build_cv_pdf(data, output_path="cv.pdf", highlight=False, language="EN"):
 
     header = data.get("header", {})
     keywords = data.get("keywords", [])
+    
+    # Traductions selon la langue
+    translations = {
+        "EN": {
+            "presentation": "PROFESSIONAL SUMMARY",
+            "work_experience": "WORK EXPERIENCE",
+            "education": "EDUCATION",
+            "technical_skills": "TECHNICAL SKILLS",
+            "phone": "Phone",
+            "email": "Email",
+            "linkedin": "LinkedIn",
+            "portfolio": "Portfolio",
+            "github": "GitHub",
+            "languages": "Languages"
+        },
+        "FR": {
+            "presentation": "PRÉSENTATION PROFESSIONNELLE",
+            "work_experience": "EXPÉRIENCE PROFESSIONNELLE",
+            "education": "FORMATION",
+            "technical_skills": "COMPÉTENCES TECHNIQUES",
+            "phone": "Téléphone",
+            "email": "Email",
+            "linkedin": "LinkedIn",
+            "portfolio": "Portfolio",
+            "github": "GitHub",
+            "languages": "Langues"
+        }
+    }
+    
+    texts = translations.get(language, translations["EN"])
 
     story = []
 
@@ -141,27 +171,27 @@ def build_cv_pdf(data, output_path="cv.pdf"):
     contact_lines = []
 
     if safe(header.get("phone")):
-        contact_lines.append(f"Phone: {header['phone']}")
+        contact_lines.append(f"{texts['phone']}: {header['phone']}")
 
     if safe(header.get("location")):
         contact_lines.append(header["location"])
 
     if safe(header.get("email")):
         contact_lines.append(
-            f'Email: <link href="mailto:{header["email"]}" color="{LINK_COLOR}">{header["email"]}</link>'
+            f'{texts["email"]}: <link href="mailto:{header["email"]}" color="{LINK_COLOR}">{header["email"]}</link>'
         )
 
     if safe(header.get("linkedin")):
-        contact_lines.append(f"LinkedIn: {link(header['linkedin'])}")
+        contact_lines.append(f"{texts['linkedin']}: {link(header['linkedin'])}")
 
     if safe(header.get("portfolio")):
-        contact_lines.append(f"Portfolio: {link(header['portfolio'])}")
+        contact_lines.append(f"{texts['portfolio']}: {link(header['portfolio'])}")
 
     if safe(header.get("github")):
-        contact_lines.append(f"GitHub: {link(header['github'])}")
+        contact_lines.append(f"{texts['github']}: {link(header['github'])}")
 
     if header.get("languages"):
-        contact_lines.append(f"Languages: {', '.join(header['languages'])}")
+        contact_lines.append(f"{texts['languages']}: {', '.join(header['languages'])}")
 
     if contact_lines:
         story.append(Paragraph("<br/>".join(contact_lines), contact_style))
@@ -188,10 +218,26 @@ def build_cv_pdf(data, output_path="cv.pdf"):
 
 
     # =========================
+    # PRESENTATION
+    # =========================
+
+    presentation_text = data.get("presentation", "")
+    if safe(presentation_text):
+        section(texts["presentation"])
+        story.append(
+            Paragraph(
+                highlight_text(presentation_text, keywords, highlight),
+                normal
+            )
+        )
+        story.append(Spacer(1,12))
+
+
+    # =========================
     # WORK EXPERIENCE
     # =========================
 
-    section("WORK EXPERIENCE")
+    section(texts["work_experience"])
 
     for job in data.get("work_experience", []):
 
@@ -226,13 +272,13 @@ def build_cv_pdf(data, output_path="cv.pdf"):
         if safe(job.get("description")):
             story.append(
                 Paragraph(
-                    highlight_text(job["description"], keywords),
+                    highlight_text(job["description"], keywords, highlight),
                     normal
                 )
             )
 
         bullets = [
-            Paragraph(highlight_text(x, keywords), normal)
+            Paragraph(highlight_text(x, keywords, highlight), normal)
             for x in job.get("bullets", [])
             if safe(x)
         ]
@@ -254,14 +300,14 @@ def build_cv_pdf(data, output_path="cv.pdf"):
     # EDUCATION
     # =========================
 
-    section("EDUCATION")
+    section(texts["education"])
 
     for edu in data.get("education", []):
 
         if not safe(edu.get("title")):
             continue
 
-        text = f"<b>{edu.get('date','')}</b> — {highlight_text(edu['title'], keywords)}"
+        text = f"<b>{edu.get('date','')}</b> — {highlight_text(edu['title'], keywords, highlight)}"
 
         if safe(edu.get("school")):
 
@@ -280,13 +326,13 @@ def build_cv_pdf(data, output_path="cv.pdf"):
     # SKILLS
     # =========================
 
-    section("TECHNICAL SKILLS")
+    section(texts["technical_skills"])
 
     skills = data.get("technical_skills", {})
 
     for category, values in skills.items():
 
-        values = [highlight_text(v, keywords) for v in values if safe(v)]
+        values = [highlight_text(v, keywords, highlight) for v in values if safe(v)]
 
         if not values:
             continue

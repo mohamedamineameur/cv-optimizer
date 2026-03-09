@@ -71,3 +71,8 @@ htmlcov/
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+# PyInstaller
+*.spec.bak
+*.spec~
+*.manifest

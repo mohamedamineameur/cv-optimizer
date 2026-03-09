@@ -10,6 +10,7 @@ from openai import OpenAI
 from pydantic import BaseModel, Field, ValidationError
 
 from cv_generator import build_cv_pdf
+from cover_letter_generator import build_cover_letter_pdf
 
 
 # =========================
@@ -482,6 +483,79 @@ def optimize_cv(cv_text, job_offer, language):
 
 
 # =========================
+# COVER LETTER GENERATION
+# =========================
+
+def generate_cover_letter_text(cv_data: dict[str, Any], job_offer: str, language: str) -> str:
+    """
+    Génère une lettre de motivation personnalisée basée sur le CV et l'offre d'emploi.
+    """
+    cv_language = "French" if language == "FR" else "English"
+    
+    header = cv_data.get("header", {})
+    name = header.get("name", "")
+    title = header.get("title", "")
+    email = header.get("email", "")
+    phone = header.get("phone", "")
+    location = header.get("location", "")
+    
+    # Préparer un résumé des compétences et expériences clés
+    work_experience = cv_data.get("work_experience", [])
+    technical_skills = cv_data.get("technical_skills", {})
+    keywords = cv_data.get("keywords", [])
+    
+    skills_summary = []
+    for category, skills in technical_skills.items():
+        skills_summary.extend(skills[:5])  # Limiter à 5 compétences par catégorie
+    
+    prompt = f"""
+You are an expert cover letter writer. Write a professional cover letter in {cv_language} language.
+
+REQUIREMENTS:
+- Write in {cv_language} language
+- Professional tone, engaging, and tailored to the specific job offer
+- 3-4 paragraphs maximum
+- First paragraph: Introduction and why you're interested in this position
+- Second paragraph: Highlight your most relevant experience and achievements that match the job requirements
+- Third paragraph: Emphasize your key skills and how they align with the company's needs
+- Fourth paragraph (optional): Closing statement expressing enthusiasm and next steps
+- Use keywords from the job offer naturally
+- Be specific and concrete, not generic
+- Show enthusiasm but remain professional
+
+CANDIDATE INFORMATION:
+Name: {name}
+Title: {title}
+Email: {email}
+Phone: {phone}
+Location: {location}
+
+KEY SKILLS: {', '.join(skills_summary[:15])}
+KEYWORDS FROM JOB: {', '.join(keywords[:15])}
+
+RECENT EXPERIENCE SUMMARY:
+{chr(10).join([f"- {exp.get('title', '')} at {exp.get('company', '')}: {exp.get('description', '')[:200]}" for exp in work_experience[:3]])}
+
+JOB OFFER:
+{job_offer}
+
+Write ONLY the cover letter content (no subject line, no "Dear Hiring Manager" - start directly with the first paragraph). 
+The letter should be well-formatted with proper paragraphs and professional language.
+"""
+
+    completion = client.chat.completions.create(
+        model="gpt-4.1",
+        temperature=0.7,
+        messages=[
+            {"role": "system", "content": "You are an expert cover letter writer. Write professional, engaging, and tailored cover letters."},
+            {"role": "user", "content": prompt},
+        ]
+    )
+    
+    return completion.choices[0].message.content.strip()
+
+
+# =========================
 # STREAMLIT UI
 # =========================
 
@@ -562,6 +636,8 @@ show_json = st.checkbox("Show JSON", value=False)
 
 highlight_keywords = st.checkbox("Highlight keywords in PDF", value=False)
 
+generate_cover_letter = st.checkbox("Generate cover letter", value=False)
+
 
 if st.button("Optimize CV"):
 
@@ -605,6 +681,7 @@ if st.button("Optimize CV"):
         data = optimize_cv(cv_text, job_offer, language)
         st.session_state['cv_data'] = data
         st.session_state['cv_language'] = language
+        st.session_state['job_offer'] = job_offer
 
     st.success("CV optimized successfully!")
 
@@ -630,3 +707,25 @@ if 'cv_data' in st.session_state:
                 file_name="optimized_cv.pdf",
                 mime="application/pdf",
             )
+        
+        # Génération de la lettre de motivation si demandée
+        if generate_cover_letter:
+            with st.spinner("Generating cover letter..."):
+                job_offer_text = st.session_state.get('job_offer', job_offer)
+                cover_letter_text = generate_cover_letter_text(data, job_offer_text, cv_language)
+                cover_letter_path = build_cover_letter_pdf(
+                    cover_letter_text,
+                    data.get("header", {}),
+                    language=cv_language,
+                    output_path="cover_letter.pdf"
+                )
+            
+            st.success("Cover letter generated!")
+            
+            with open(cover_letter_path, "rb") as f:
+                st.download_button(
+                    label="Download cover letter",
+                    data=f.read(),
+                    file_name="cover_letter.pdf",
+                    mime="application/pdf",
+                )

@@ -38,12 +38,15 @@ if __name__ == "__main__":
         streamlit_script = os.path.join(SCRIPT_DIR, "ats_optimizer.py")
     
     # Arguments pour Streamlit
+    # Utiliser la variable d'environnement PORT si disponible
+    port = os.getenv("PORT", "8501")
+    
     sys.argv = [
         "streamlit",
         "run",
         streamlit_script,
         "--server.headless", "true",
-        "--server.port", "8501",
+        "--server.port", port,
         "--server.address", "0.0.0.0",
         "--browser.gatherUsageStats", "false"
     ]

@@ -4,7 +4,7 @@ services:
   ats-optimizer:
     build: .
     ports:
-      - "8501:8501"
+      - "5000:5000"
     env_file:
       - .env
     volumes:

@@ -2,6 +2,7 @@
 """
 Point d'entrée principal de l'application
 Compatible avec Streamlit Cloud et déploiement local
+Le port est toujours géré via la variable d'environnement PORT
 """
 import os
 import subprocess
@@ -20,13 +21,21 @@ if __name__ == "__main__":
         "--server.headless", "true",
     ]
     
-    # Ne spécifier le port que si on n'est pas sur Streamlit Cloud
-    # Streamlit Cloud gère automatiquement les ports via PORT env var
-    if not os.getenv("STREAMLIT_CLOUD"):
-        # Pour déploiement local, utiliser le port spécifié ou 8501 par défaut
-        port = os.getenv("PORT", "8501")
+    # Utiliser TOUJOURS la variable d'environnement PORT
+    # Streamlit Cloud définit automatiquement PORT
+    # Pour déploiement local, définir PORT dans l'environnement ou .env
+    port = os.getenv("PORT")
+    
+    if port:
+        # Si PORT est défini, l'utiliser
         streamlit_args.extend([
             "--server.port", port,
+        ])
+    # Si PORT n'est pas défini, Streamlit utilisera son port par défaut
+    
+    # Address seulement pour déploiement local (pas Streamlit Cloud)
+    if not os.getenv("STREAMLIT_CLOUD"):
+        streamlit_args.extend([
             "--server.address", "0.0.0.0"
         ])
     

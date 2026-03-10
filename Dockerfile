@@ -19,8 +19,13 @@ COPY . .
 # Créer les dossiers nécessaires
 RUN mkdir -p output temp
 
-# Exposer le port Streamlit
-EXPOSE 8501
+# Exposer le port Streamlit (utilise PORT env var ou 8501 par défaut)
+ARG PORT=8501
+EXPOSE ${PORT}
 
-# Commande par défaut
-CMD ["python", "-m", "streamlit", "run", "app/frontend/main.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# Variable d'environnement pour le port
+ENV PORT=${PORT}
+
+# Commande par défaut - utilise PORT depuis l'environnement
+# Utiliser run.py qui gère automatiquement PORT
+CMD ["python", "run.py"]

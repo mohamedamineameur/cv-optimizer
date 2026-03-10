@@ -2,6 +2,16 @@
 
 Un outil intelligent d'optimisation de CV pour les systèmes ATS (Applicant Tracking Systems) utilisant l'intelligence artificielle pour améliorer la correspondance entre votre CV et les offres d'emploi.
 
+## 🏗️ Architecture Professionnelle Full Stack
+
+Ce projet utilise une architecture modulaire professionnelle avec séparation claire des responsabilités :
+
+- **Backend Services** : Extraction, optimisation, génération PDF
+- **Frontend** : Interface Streamlit moderne et intuitive
+- **Configuration** : Gestion centralisée via variables d'environnement
+- **Logging & Errors** : Système de logging et gestion d'erreurs robuste
+- **Docker** : Support pour containerisation et déploiement
+
 ## 🎯 Objectif du Projet
 
 Ce projet permet de :
@@ -38,18 +48,37 @@ Ce projet permet de :
 
 ## 🏗️ Architecture du Projet
 
-### Structure des Fichiers
+### Structure des Fichiers (Nouvelle Architecture)
 
 ```
 pdf/
-├── ats_optimizer.py      # Application principale Streamlit + logique métier
-├── cv_generator.py       # Générateur de PDF avec ReportLab
-├── main.py              # Point d'entrée pour l'exécutable
-├── ats_optimizer.spec   # Configuration PyInstaller
-├── build_executable.sh  # Script de build automatisé
-├── .env                 # Variables d'environnement (API keys)
-└── README.md            # Documentation
+├── app/
+│   ├── config/              # Configuration centralisée
+│   │   └── settings.py      # Settings de l'application
+│   ├── models/              # Modèles de données
+│   │   └── schemas.py       # Schémas Pydantic
+│   ├── services/            # Services métier
+│   │   ├── cv_extractor.py  # Extraction de texte CV
+│   │   ├── cv_optimizer.py  # Service principal d'optimisation
+│   │   ├── openai_service.py # Service OpenAI
+│   │   ├── pdf_service.py   # Génération PDF
+│   │   └── prompts.py       # Gestion des prompts
+│   ├── utils/               # Utilitaires
+│   │   ├── logger.py        # Configuration logging
+│   │   └── exceptions.py    # Exceptions personnalisées
+│   └── frontend/            # Interface utilisateur
+│       └── main.py          # Application Streamlit refactorisée
+├── cv_generator.py          # Générateur PDF CV (legacy)
+├── cover_letter_generator.py # Générateur PDF lettre (legacy)
+├── ats_optimizer.py         # Ancien fichier (toujours fonctionnel)
+├── run.py                   # Point d'entrée principal
+├── requirements.txt         # Dépendances Python
+├── Dockerfile              # Configuration Docker
+├── docker-compose.yml      # Docker Compose
+└── README.md              # Documentation
 ```
+
+Voir `ARCHITECTURE.md` pour plus de détails sur l'architecture.
 
 ### Architecture Logicielle
 
@@ -133,7 +162,7 @@ pyinstaller>=6.0.0       # Création d'exécutable
 - Python 3.12 ou supérieur
 - Clé API OpenAI
 
-### Étapes d'Installation
+### Installation Rapide
 
 1. **Cloner ou télécharger le projet**
 ```bash
@@ -148,25 +177,46 @@ source venv/bin/activate  # Sur Linux/Mac
 
 3. **Installer les dépendances**
 ```bash
-pip install streamlit openai pydantic pdfplumber python-docx reportlab python-dotenv pyinstaller
+pip install -r requirements.txt
 ```
 
 4. **Configurer les variables d'environnement**
 Créer un fichier `.env` à la racine du projet :
 ```env
 OPENAI_API_KEY=votre_cle_api_openai
+OPENAI_MODEL=gpt-4.1
+LOG_LEVEL=INFO
 ```
 
-## 💻 Utilisation
-
-### Mode Application Web (Streamlit)
+### Installation avec Docker
 
 ```bash
-source venv/bin/activate
-streamlit run ats_optimizer.py
+docker-compose up
 ```
 
 L'application sera accessible sur `http://localhost:8501`
+
+## 💻 Utilisation
+
+### Mode Application Web (Streamlit) - Nouvelle Architecture
+
+```bash
+source venv/bin/activate
+
+# Option 1 : Utiliser le point d'entrée principal
+python run.py
+
+# Option 2 : Lancer directement Streamlit
+streamlit run app/frontend/main.py
+```
+
+L'application sera accessible sur `http://localhost:8501`
+
+### Mode Application Web (Ancien fichier - toujours fonctionnel)
+
+```bash
+streamlit run ats_optimizer.py
+```
 
 ### Mode Exécutable Standalone
 

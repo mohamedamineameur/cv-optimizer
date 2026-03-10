@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>CV Optimizer ATS - Optimisez Votre CV pour les Systèmes ATS avec l'IA</title>
+    <meta name="description" content="Optimisez votre CV pour les systèmes ATS (Applicant Tracking Systems) avec l'intelligence artificielle. Générez un CV professionnel optimisé et une lettre de motivation personnalisée en quelques minutes.">
+    <meta name="keywords" content="CV optimisé, ATS, optimisation CV, CV professionnel, lettre de motivation, intelligence artificielle, GPT-4, recherche d'emploi, CV français, CV anglais">
+    <meta name="author" content="CodeCraftNest">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="French">
+    <meta name="revisit-after" content="7 days">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cv-optimizer.codecraftnest.ca/">
+    <meta property="og:title" content="CV Optimizer ATS - Optimisez Votre CV avec l'IA">
+    <meta property="og:description" content="Optimisez votre CV pour les systèmes ATS avec l'intelligence artificielle. Générez un CV professionnel optimisé en quelques minutes.">
+    <meta property="og:image" content="https://cv-optimizer.codecraftnest.ca/static/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://cv-optimizer.codecraftnest.ca/">
+    <meta property="twitter:title" content="CV Optimizer ATS - Optimisez Votre CV avec l'IA">
+    <meta property="twitter:description" content="Optimisez votre CV pour les systèmes ATS avec l'intelligence artificielle.">
+    <meta property="twitter:image" content="https://cv-optimizer.codecraftnest.ca/static/og-image.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://cv-optimizer.codecraftnest.ca/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/static/manifest.json">
+    
+    <!-- Preconnect pour performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cv-optimizer.codecraftnest.ca">
+    
+    <!-- Preload pour ressources critiques -->
+    <link rel="preload" href="/static/favicon.ico" as="image">
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "CV Optimizer ATS",
+      "description": "Outil d'optimisation de CV pour les systèmes ATS utilisant l'intelligence artificielle",
+      "url": "https://cv-optimizer.codecraftnest.ca",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      },
+      "featureList": [
+        "Optimisation CV pour ATS",
+        "Génération de lettre de motivation",
+        "Support multilingue (FR/EN)",
+        "Mise en évidence des mots-clés",
+        "Génération PDF professionnel"
+      ],
+      "creator": {
+        "@type": "Organization",
+        "name": "CodeCraftNest",
+        "url": "https://codecraftnest.ca"
+      }
+    }
+    </script>
+    
+    <style>
+        /* Optimisation pour réduire CLS - dimensions fixes */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            /* Réduire CLS */
+            overflow-x: hidden;
+        }
+        
+        /* Font display swap pour éviter FOIT */
+        @font-face {
+            font-display: swap;
+        }
+        
+        /* Optimisation pour le chargement progressif */
+        .container {
+            opacity: 0;
+            animation: fadeIn 0.5s ease-in forwards;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            padding: 3rem 0;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .features {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            padding: 1.5rem;
+            border-radius: 10px;
+            background: #f8f9fa;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #667eea;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .seo-content {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .seo-content h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        
+        .seo-content p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+        
+        .keywords {
+            background: #f0f4ff;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .keywords strong {
+            color: #667eea;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .features {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📄 CV Optimizer ATS</h1>
+            <p class="subtitle">Optimisez votre CV pour les systèmes ATS avec l'intelligence artificielle</p>
+            <a href="/app" class="cta-button">🚀 Commencer gratuitement</a>
+        </header>
+        
+        <div class="features">
+            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 1rem; color: #667eea;">
+                Pourquoi choisir CV Optimizer ATS ?
+            </h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <div class="feature-title">Intelligence Artificielle</div>
+                    <p>Utilise GPT-4 pour optimiser votre CV selon l'offre d'emploi spécifique</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-title">Optimisation ATS</div>
+                    <p>Maximisez votre score de correspondance avec les systèmes de recrutement automatisés</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <div class="feature-title">Lettre de Motivation</div>
+                    <p>Générez une lettre de motivation personnalisée adaptée à chaque offre</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <div class="feature-title">Multilingue</div>
+                    <p>Support du français et de l'anglais pour vos candidatures internationales</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">✨</div>
+                    <div class="feature-title">Mise en Évidence</div>
+                    <p>Visualisez les mots-clés importants avec le highlighting optionnel</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Rapide et Efficace</div>
+                    <p>Résultats en quelques minutes, prêts à être téléchargés en PDF</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 3rem; padding: 2rem; background: #f0f4ff; border-radius: 10px;">
+                <h3 style="color: #667eea; margin-bottom: 1rem;">Comment ça fonctionne ?</h3>
+                <ol style="line-height: 2; padding-left: 1.5rem;">
+                    <li><strong>Uploadez votre CV</strong> au format PDF ou DOCX</li>
+                    <li><strong>Collez l'offre d'emploi</strong> que vous visez</li>
+                    <li><strong>Ajoutez des expériences</strong> si nécessaire (optionnel)</li>
+                    <li><strong>L'IA optimise votre CV</strong> en quelques secondes</li>
+                    <li><strong>Téléchargez votre CV optimisé</strong> et votre lettre de motivation en PDF</li>
+                </ol>
+            </div>
+            
+            <div style="margin-top: 2rem; text-align: center;">
+                <a href="/app" class="cta-button" style="background: #667eea; color: white;">
+                    🚀 Optimiser mon CV maintenant
+                </a>
+            </div>
+        </div>
+        
+        <!-- Contenu SEO additionnel -->
+        <div class="seo-content">
+            <h2>Optimisez Votre CV pour Maximiser Vos Chances d'Emploi</h2>
+            
+            <p>
+                <strong>CV Optimizer ATS</strong> est l'outil ultime pour optimiser votre curriculum vitae et maximiser vos chances de passer les systèmes de recrutement automatisés (ATS). Avec l'aide de l'intelligence artificielle GPT-4, nous transformons votre CV en un document professionnel parfaitement adapté à chaque offre d'emploi.
+            </p>
+            
+            <div class="keywords">
+                <strong>Mots-clés optimisés :</strong> CV optimisé ATS, optimisation CV, système ATS, CV professionnel, lettre de motivation IA, GPT-4 CV, recherche d'emploi, CV français, CV anglais, Applicant Tracking System
+            </div>
+            
+            <h2>Pourquoi Optimiser Votre CV pour les Systèmes ATS ?</h2>
+            
+            <p>
+                Plus de <strong>98% des entreprises Fortune 500</strong> utilisent des systèmes ATS pour filtrer les candidatures. Sans optimisation, votre CV peut être rejeté avant même qu'un recruteur ne le voie. Notre outil garantit que votre CV contient les bons mots-clés et la bonne structure pour passer ces filtres automatiques.
+            </p>
+            
+            <h2>Fonctionnalités Avancées</h2>
+            
+            <p>
+                Notre plateforme utilise les dernières technologies d'intelligence artificielle pour :
+            </p>
+            
+            <ul style="line-height: 2; padding-left: 2rem;">
+                <li><strong>Analyser votre CV</strong> et extraire toutes les informations pertinentes</li>
+                <li><strong>Identifier les mots-clés</strong> de l'offre d'emploi qui correspondent à votre profil</li>
+                <li><strong>Réécrire votre CV</strong> avec un wording optimisé pour l'ATS</li>
+                <li><strong>Générer une lettre de motivation</strong> personnalisée et adaptée</li>
+                <li><strong>Mettre en évidence les mots-clés</strong> importants dans le PDF généré</li>
+                <li><strong>Supporter plusieurs langues</strong> (français et anglais)</li>
+            </ul>
+            
+            <h2>Comment Utiliser CV Optimizer ATS</h2>
+            
+            <p>
+                L'utilisation de notre outil est simple et rapide :
+            </p>
+            
+            <ol style="line-height: 2; padding-left: 2rem;">
+                <li>Téléchargez votre CV actuel (PDF ou DOCX)</li>
+                <li>Collez le texte complet de l'offre d'emploi</li>
+                <li>Ajoutez des expériences supplémentaires si nécessaire</li>
+                <li>Laissez l'IA optimiser votre CV en quelques secondes</li>
+                <li>Téléchargez votre CV optimisé et votre lettre de motivation en PDF</li>
+            </ol>
+            
+            <h2>Résultats Garantis</h2>
+            
+            <p>
+                Les utilisateurs de <strong>CV Optimizer ATS</strong> rapportent une augmentation significative de leurs taux de réponse aux candidatures. Notre système analyse chaque détail de l'offre d'emploi et adapte votre CV en conséquence, garantissant une correspondance optimale avec les critères de recherche des recruteurs.
+            </p>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="/app" class="cta-button" style="background: #667eea; color: white;">
+                    🚀 Commencer Maintenant - Gratuit
+                </a>
+            </div>
+        </div>
+        
+        <!-- Liens internes pour SEO -->
+        <div style="text-align: center; margin-top: 2rem; color: white;">
+            <a href="/faq" style="color: white; margin: 0 1rem;">FAQ</a>
+            <a href="/app" style="color: white; margin: 0 1rem;">Application</a>
+            <a href="https://codecraftnest.ca" style="color: white; margin: 0 1rem;" target="_blank">CodeCraftNest</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2024 CodeCraftNest - CV Optimizer ATS</p>
+            <p style="margin-top: 0.5rem; opacity: 0.8;">
+                Optimisez votre CV pour maximiser vos chances de décrocher l'emploi de vos rêves
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

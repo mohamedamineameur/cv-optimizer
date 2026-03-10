@@ -1,0 +1,12 @@
+# Configuration pour le dossier static
+# Permettre l'accès aux fichiers statiques
+
+<FilesMatch "\.(txt|xml|html|css|js|jpg|jpeg|png|gif|ico|svg|webp)$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
+
+# Headers pour robots.txt et sitemap.xml
+<FilesMatch "^(robots|sitemap)">
+    Header set Content-Type "text/plain; charset=utf-8"
+</FilesMatch>

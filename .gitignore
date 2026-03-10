@@ -76,3 +76,16 @@ dmypy.json
 *.spec.bak
 *.spec~
 *.manifest
+
+# Output files
+output/
+temp/
+*.pdf
+*.json
+!package.json
+!package-lock.json
+
+# Static files (garder les fichiers SEO)
+# static/robots.txt
+# static/sitemap.xml
+# static/index.html

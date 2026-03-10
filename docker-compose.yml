@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  ats-optimizer:
+    build: .
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    volumes:
+      - ./output:/app/output
+      - ./temp:/app/temp
+    restart: unless-stopped

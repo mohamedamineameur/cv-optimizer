@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Allow: /app
+Disallow: /api/
+Disallow: /__pycache__/
+Disallow: /venv/
+Disallow: /.env
+Disallow: /output/
+Disallow: /temp/
+Disallow: /_stcore/
+Disallow: /static/js/
+Disallow: /static/css/
+
+Sitemap: https://cv-optimizer.codecraftnest.ca/sitemap.xml

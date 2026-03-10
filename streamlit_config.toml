@@ -1,13 +1,15 @@
 [server]
 headless = true
-port = 8501
-address = "0.0.0.0"
+# Port géré automatiquement par Streamlit Cloud
+# port = 8501
+# address = "0.0.0.0"
 enableCORS = false
 enableXsrfProtection = true
 
 [browser]
 gatherUsageStats = false
-serverAddress = "cv-optimizer.codecraftnest.ca"
+# Server address géré automatiquement par Streamlit Cloud
+# serverAddress = "cv-optimizer.codecraftnest.ca"
 
 [theme]
 primaryColor = "#667eea"

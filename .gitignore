@@ -58,6 +58,8 @@ Thumbs.db
 
 # Streamlit
 .streamlit/
+# Mais permettre config.toml pour Streamlit Cloud
+!.streamlit/config.toml
 
 # Jupyter Notebook
 .ipynb_checkpoints
